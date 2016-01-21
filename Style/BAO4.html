@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="../Style/style.css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/ico" href="../Images/bao.ico">
+	<title>BAO 4</title>
+</head>
+
+<body>
+
+<img src="../Images/titlebar3.png" id="navigateur" alt="menu">
+<img src="../Images/titlebar4.png" id="navigateur2" alt="menu2">
+
+<a href="BAO1.html"><div id=button1><img src="../Images/b1.png" id="pic1" alt="1"></div></a>
+<a href="BAO2.html"><div id=button2><img src="../Images/b2.png" id="pic2" alt="2"></div></a>
+<a href="BAO3.html"><div id=button3><img src="../Images/b3.png" id="pic3" alt="3"></div></a>
+<a href="BAO4.html"><div id=button4><img src="../Images/b4.png" id="pic4" alt="4"></div></a>
+<a href="index.html"><div id=button5><img src="../Images/b5.png" id="pic5" alt="5"></div></a>
+<a href="index.html"><div id=button6><img src="../Images/b6.png" id="pic6" alt="6"--></div></a>
+
+<a href="index.html"><div id=buttonhome></div></a>
+
+
+
+<div id="innerpage">
+	<a id="top_of_page"><h1>Boîte à Outils 4</h1></a>
+	<br>
+
+	<p>La BAO 4 consiste à faire une représentation de nos motifs syntaxiques en graphes avec les sorties de BAO précédente.  Cette visualisation se fait par un programme qui s'appelle patron2graphe.exe, qui utilise des lignes de commande. Il est intégré dans le logiciel Trameur. Ceci permet de voir les mots qui mènent à plusieurs expressions et les différentes manières ou contextes dont un mot est employé dans la rubrique.</p>	
+	<h2>Mode d'emploi</h2>
+	<p>• Pour afficher tous les noeuds du graphe: </p>
+	<p>patron2graphe.exe "codagedes2fichiers" FichierEnEntree </p>
+	<p>• Avec uniquement des noeuds obtenus par filtrage prealable du motif dans les patrons:</p>
+	<p>patron2graphe.exe "codagedes2fichiers" FichierEnEntree FichierContenantLeMotif</p>
+	<p>• Le motif dans la forme d'un fichier texte peut contenir des expression régulières. Pour extraire toutes les formes correspondantes aux patrons choisis qui contiennent le mot  “élection”, le fichier motif.txt serait comme suit :</p>
+	<p>MOTIF=[Eé]lection.+ </p>
+	<p>ou plus précis: MOTIF=(\bélection[s].+?\b)|(\blocale\b)</p>
+	<p>On va vois pas mal de choses analysables. Voici un aperçu pour les résultats de la rubrique "SOCIETE" avec aucun motif en argument:</p>
+	<a href="../Images/patron_societe.png"><img src="../Images/patron_societe.png" class="centredimage" alt="patron_societe"></a>
+	<br>
+	<a href="../Images/patron_societe.png" class="lien_centre">[ Visualiser ]</a>
+	
+	<p>Quelques exemples avec des fichiers de motifs: </p>
+	<p>MOTIF= [Ii]mmigration.+ dans la rubrique SOCIETE en fichier NOM PREP NOM</p>
+	<a href="../Images/soci_npn_immigration.png"><img src="../Images/soci_npn_immigration.png" class="centredimage" alt="soci_npn_immigration"></a>
+	<br>
+	<a href="../Images/soci_npn_immigration.png" class="lien_centre">[ Visualiser ]</a>
+	
+	<p>MOTIF=\bélection\b  dans la rubrique POLITIQUE en fichier NOM PREP NOM</p>
+	<a href="../Images/polit_election_npn.png"><img src="../Images/polit_election_npn.png" class="centredimage" alt="polit_election_npn"></a>
+	<br>
+	<a href="../Images/polit_election_npn.png" class="lien_centre">[ Visualiser ]</a>
+	
+	<p>MOTIF=\bélection\b  dans la rubrique POLITIQUE en fichier NOM ADJ</p>
+	<a href="../Images/polit_eleciton_n_adj.png"><img src="../Images/polit_eleciton_n_adj.png" class="centredimage" alt="polit_eleciton_n_adj"></a>
+	<br>
+	<a href="../Images/polit_eleciton_n_adj.png" class="lien_centre">[ Visualiser ]</a>
+	
+	<p>La dernière graphe est presque une représentation de mode de scrutin et de différentes élections en France. D'après nos connaissance, ce que nous (aux yeux des étrangers) pouvons interpréter est que: La France est une démocratie représentative (élection sénatoriale, consulaire…). Les représentants des branches législatives y sont élus directement ou indirectement par les citoyens français (Français sélectionnés). En fait, pour compléter, on sait que les élections locales compris les élections municipales, départementales, régionales. Les élections nationales sont l’élection présidentielle, les élections législatives et les élections sénatoriales…Les élections européennes ont eu lieu en mai 2014, du coup, le RSS 2014 ont mentionné 12 fois cette élection.  En regardant la graphe au-dessus, le parti UMP est aussi mentionné dans le motif cherché. Cette graphe donne simplement les noms de l’élection, on ne voit pas trop de relation entre eux. On est sur, si on fait la recherche avec des motifs plus avancés, on trouvera des informations autour de ce sujet plus intéressantes.</p>
+	<br>
+	<br>
+	<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>	
+<br>
+<br>
+<br>	
+<div class="rightfooter">Crée par Chang TAN et Si WU, Plurital 2015</div>
+</div>
+</body>
+
+</html>

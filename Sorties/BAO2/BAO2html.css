@@ -1,0 +1,69 @@
+html{
+
+	font-family:calibri;
+}
+
+#contenu{
+
+	background-color:#e0fbf1;
+	border:1px dashed blue;
+	width:90%;
+	margin-left:5%;
+}
+
+h1{
+	text-align:center;
+}
+
+table{
+	width:95%;
+	border:1px solid black;
+	border-collapse:collapse;
+	table-layout:fixed;
+	display:block;
+	margin:auto;
+	background-color:white;
+	margin-bottom:0%;
+	text-align:left;
+}
+
+
+th{
+	background:#dd4848;
+	border:1px solid black;
+	color:black;
+	text-align:center;
+}
+.fileheader{
+	background:#a31616;
+	color:beige;
+	font-weight:normal;
+	text-align:center;
+	
+}
+
+td{
+
+	border:1px solid black;
+	padding:11px;
+	color:black;
+}
+
+.forme{
+	color:#762994;
+	font-weight:bold;
+
+}
+
+.lemma{
+	color:#2e723c;
+}
+
+.type{
+
+	color:#0c52b0;
+}
+.small{
+	font-size:70%;
+	font-style:italic;
+}

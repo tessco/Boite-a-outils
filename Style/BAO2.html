@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="../Style/style.css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/ico" href="../Images/bao.ico">
+	<title>BAO 2</title>
+</head>
+
+<body>
+
+<img src="../Images/titlebar3.png" id="navigateur" alt="menu">
+<img src="../Images/titlebar4.png" id="navigateur2" alt="menu2">
+<a href="BAO1.html"><div id=button1><img src="../Images/b1.png" id="pic1" alt="1"></div></a>
+<a href="BAO2.html"><div id=button2><img src="../Images/b2.png" id="pic2" alt="2"></div></a>
+<a href="BAO3.html"><div id=button3><img src="../Images/b3.png" id="pic3" alt="3"></div></a>
+<a href="BAO4.html"><div id=button4><img src="../Images/b4.png" id="pic4" alt="4"></div></a>
+<a href="index.html"><div id=button5><img src="../Images/b5.png" id="pic5" alt="5"></div></a>
+
+<a href="index.html"><div id=buttonhome></div></a>
+
+
+
+<div id="innerpage">
+	<a id="top_of_page"><h1>Boîte à Outils 2</h1></a>
+	<br><br>
+<h2>Une représentation des sorties XML de BAO 2:</h2>
+
+<img src="../Images/idee_xml.jpeg" id="arborescence_corpus" alt="Arborescence">
+<br><br>
+<p>Pour obtenir le résultat ci-dessus, il faut étiqueter les sorties XML de BAO 1 par TreeTagger puis on les transforme par XSLT en format HTML.</p>
+<h2>Un peu de présentation pour BAO 2:</h2>
+	<p>Dans l’étape BAO 2, il s'agit d'utiliser des outils d'annotation afin d'étiqueter les sorties textuelles de la BAO 1. L'étiquetage morphosyntaxique nécessite d'avoir déjà segmenté le texte en tokens. Chaque forme est associée à un lemme et une catégorie syntaxique. Les deux logiciels à notre disposition sont <a href="#CordialProgramme">Cordial</a> et <a href="#Treetagger">TreeTagger</a></p>
+	<h3>Cordial</h3>		
+	<p>Notez que Cordial ne supporte pas les fichiers au-dessus d’une certaine taille, et les fichiers à traiter sont uniquement avec les sorties TXT. Les fichiers doivent être en ISO-8859-1, c’est à dire qu’on doit convertir notre fichiers (UTF-8) en ISO.</p>
+	
+	<h2>Transcodage</h2>
+	
+	<p>Il y a 3 méthodes simples mais manuels que l’on a essayé, la première été conseillée par notre professeur en utilisant Word sous Windows. Deuxième , sous Mac OS l’éditeur TextWrangler peut convertir l’encodage au moment que l’on fait copy-coller et sauvegarder. Troisième, une ligne de commande Perl, il suffit de taper le code ci-dessous: </p>
+	
+	<div class="keep_format"><span class="green"></span>
+<span class="blue">perl -MEncode -ne 'print encode("iso-8859-1",decode("utf8",$_))' </span>
+
+<span class="blue">fichier_à_convertir.txt>fichier_converti.txt</span>
+
+</div>
+	<h2>Utilisation</h2>
+	<p>Pour étiqueter avec Cordial : ouvrir le fichier TXT à étiqueter, puis Syntaxe --> étiquetage de texte. Ensuite, il faut appliquer les paramètres de l'étiquetage avant de lancer le programme :</p>
+	
+<div class="image"><img src="../Images/cordial.jpg" id="Cordial" alt="Paramètres de Cordial" class="centredimage"></div>
+	
+	<h2>Le Résultat</h2>
+	
+	<p>Tout processus d'étiquetage ne comprend qu’une étape de segmentation de texte en tokens et une étape d'étiquetage de ces tokens. La segmentation est automatiquement effectuée par le logiciel Cordial avant l'étiquetage à proprement dit. Le résultat est un fichier au format .cnr présentant sous forme de tableau le token suivi de son lemme et de sa catégorie syntaxique :</p>
+	
+	<div class="keep_format">de	de	PREP
+1	1	NCMIN
+Ma	mon	DETPOSS
+chance	chance	NCFS
+avec	avec	PREP
+Duras	Duras	NPSIG
+,	,	PCTFAIB
+c'	ce	PDS
+est	être	VINDP3S
+sa	son	DETPOSS
+voix	voix	NCFIN
+captivante	captivant	ADJFS
+Entretien	entretien	NCMS
+.	.	PCTFORTE
+Pierre	Pierre	NPMS
+Assouline	Assouline	NPI
+...</div>
+	
+	<p>Notez que ça arrive souvent des erreurs, par exemple: mauvais choix de catégorie syntaxique.</p>
+<div class="lien_centre"><a href="#top_of_page">[ TOP]</a></div>
+	<h3>Tree Tagger</h3>
+
+	<h2>Utilisation</h2>
+	
+	<p>TreeTagger est un “open source” qui sert à annoter du texte pour les catégories syntaxiques et les lemmes en beaucoup de langues. Il est disponible en ligne de commande qui permet d’intégrer l’étiquetage du corpus dans le programme du BAO1.</p>
+	
+	<p>Il faut passer 2 étapes pour étiqueter les textes:</p>
+	<P>Etape 1: Segmenter en utilisant le programme tokenise-fr.pl :</p>
+	<p>perl tokenise-fr.pl toto.txt > toto_segmente.txt</p>
+	<p>Etape 2: Etiqueter le fichier segmenté, dans l'ordre : tree-tagger [fichier Lib] [options] [fichier segmenté] :</p>
+	<p>tree-tagger french-utf8.par -lemma -token -no-unknown -sgml fichier_segmente.txt &gt; fichier_etiquete.txt</p>
+	
+	<p>L'option-lemma sert à indiquer les lemmes, -token à afficher les tokens, -no-unknown à ne pas indiquer si le token est inconnu, et -sgml à ne pas traiter les balises.</p>
+	
+	<h2>Le Résultat</h2>
+	<p>Le fichier en sortie contient un mot par ligne. Chaque mot, comme avant, est décrit par trois colonnes, mais l'ordre des colonnes est différent : la forme, la catégorie syntaxique et le lemme.</p>	
+
+	<div class="keep_format">du	PRP:det	du
+Monde	NAM	Monde
+,	PUN	,
+le	DET:ART	le
+18	NUM	@card@
+janvier	NOM	janvier
+en	PRP	en
+milieu	NOM	milieu
+de	PRP	de
+matinée	NOM	matinée
+,	PUN	,
+avait	VER:impf	avoir
+l'	DET:ART	le
+apparence	NOM	apparence
+anodine	ADJ	anodin
+d'	PRP	de
+un	DET:ART	un
+lien	NOM	lien
+vers	PRP	vers
+le	DET:ART	le
+site	NOM	site
+de	PRP	de
+la	DET:ART	le
+BBC	ABR	BBC
+.	SENT	.
+...</div>
+<br><br>
+<div class="lien_centre"><a href="#top_of_page">[ TOP]</a></div>
+
+<h2>Intégration au programme</h2>
+	
+<p>On peut intégrer TreeTagger dans le script de la BAO 1 pour produire une sortie XML avec chaque mot étiqueté pour sa catégorie syntaxique et son lemme. La méthode est la même pour les deux programmes.</p>
+<p>La création d'un fichier temporaire pour stocker le texte: </P>
+<div class="keep_format"><span class="blue">open</span>(TEMP, <span class="grey">"&gt;:encoding(utf-8)"</span>);
+<span class="blue">print</span> TEMP <span class="orange">$texte</span>;
+<span class="blue">close</span>(TEMP);</div><br>
+<P>Intégration:</p>
+<div class="keep_format"><span class="blue">system</span>(<span class="grey">"perl tokenise-utf8.pl ./TEMP.txt | tree-tagger.exe french.par -lemma -token -no-unknown -sgml &gt; TreeTagger.txt"</span>);</div><br>
+<p>Convertir les fichier en XML via le script "treetagger2xml-utf8.pl' fourni :
+<div class="keep_format"><span class="blue">system</span>(<span class="grey">"perl ./treetagger2xml-utf8.pl etiquetage.txt utf-8 "</span>)</div><br>
+
+<p>Lecture du fichier étiqueté + le renvoie de contenu :</P>
+<div class="keep_format"><span class="blue">open</span>(TaggedOUT,<span class="grey">"&lt;:encoding(utf-8)"</span>,<span class="grey">"etiquetage.txt.xml"</span>);
+<span class="blue">my</span> <span class="orange">$texte_tag</span>=" ";
+<span class="blue">while</span> (<span class="blue">my</span> <span class="orange">$linge</span>=) {
+{
+        <span class="orange">$texte_tag</span>.=<span class="orange">$linge</span>;
+}
+<span class="blue">close</span>(TaggedOut);
+<span class="blue">return</span> <span class="orange">$texte_tag</span>;</div><br>
+	</li>
+
+	
+</ul>
+
+<p>Les Sorties_bao2  contient les fichiers XML produits par treetagger2xml.pl, les titres et descriptions étiquetés sont comme suit:</p>
+<div class="keep_format"><span class="balise"><span class="balise">&lt;?xml</span><span class="special"> version</span>='1.0' <span class="special">encoding</span>='utf-8'?&gt;</span>
+<span class="balise">&lt;EXTRACTION&gt;</span>
+<span class="balise">&lt;NOM&gt;</span>WU_et_TAN<span class="balise">&lt;NOM&gt;</span>
+<span class="balise">&lt;IDEE&gt;</span>
+<span class="balise">&lt;file&gt;</span>
+<span class="balise">&lt;date&gt;</span>./2014/Apr/01/19-00-00/0,2-3260,1-0,0.xml<span class="balise">&lt;/name&gt;</span>
+<span class="balise">&lt;name&gt;</span>2014<span class="balise">&lt;/date&gt;</span>
+<span class="balise">&lt;items&gt;</span>
+<span class="balise">&lt;item&gt;</span>
+<span class="balise">&lt;title&gt;</span>
+	<span class="balise">&lt;element&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"type"</span><span class="balise">&gt;</span>[classe grammaticale]<span class="balise">&lt;/data&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"lemma"</span><span class="balise">&gt;</span>[lemme]<span class="balise">&lt;/data&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"string"</span><span class="balise">&gt;</span>[token]<span class="balise">&lt;/data&gt;</span>
+	<span class="balise">&lt;/element&gt;</span>
+	<span>......</span>
+<span class="balise">&lt;/title&gt;</span>
+<span class="balise">&lt;description&gt;</span>
+	<span class="balise">&lt;element&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"type"</span><span class="balise">&gt;</span>[classe grammaticale]<span class="balise">&lt;/data&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"lemma"</span><span class="balise">&gt;</span>[lemme]<span class="balise">&lt;/data&gt;</span>
+		<span class="balise">&lt;data</span><span class="special"> type</span>=<span class="violet">"string"</span><span class="balise">&gt;</span>[token]<span class="balise">&lt;/data&gt;</span>
+	<span class="balise">&lt;/element&gt;</span>
+	<span>......</span>	
+<span class="balise">&lt;/description&gt;</span>
+<span class="balise">&lt;/item&gt;</span>  <span>......</span> 
+<span class="balise">&lt;/items&gt;</span>
+<span class="balise">&lt;/file&gt;</span>  <span>......</span> 
+<span class="balise">&lt;/IDEE&gt;</span>
+<span class="balise">&lt;/EXTRACTION&gt;</span>
+</div>
+<br><br>
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+<br><br>
+
+<h2>XSL</h2>
+
+<p>Ces fichiers XML étiquetés peuvent être transformés en HTML à l'aide d'une feuille de styles ci-dessous (une partie):</p>
+
+<div class="keep_format"><span class="balise">&lt;?xml</span><span class="special"> version</span><span class="balise">="</span>1.0<span class="balise">"</span><span class="special"> encoding</span><span class="balise">="</span>UTF-8<span class="balise">"?&gt;</span>
+<span class="balise">&lt;xsl:stylesheet</span><span class="special"> xmlns:xsl</span><span class="balise">="</span>http://www.w3.org/1999/XSL/Transform<span class="balise">"</span><span class="special"> version</span><span class="balise">="</span>1.0<span class="balise">"&gt;</span>
+<span class="balise">&lt;xsl:output</span><span class="special"> method</span><span class="balise">="</span>html<span class="balise">"</span><span class="special"> version</span><span class="balise">="</span>4.0<span class="balise">"</span><span class="special"> encoding</span><span class="balise">="</span>utf-8<span class="balise">"</span><span class="special"> indent</span><span class="balise">="</span>yes<span class="balise">"/&gt;</span>
+<span class="balise">&lt;xsl:template</span><span class="special"> match</span><span class="balise">="</span>EXTRACTION<span class="balise">"&gt;</span>
+	<span class="balise">&lt;xsl:variable</span><span class="special"> name</span><span class="balise">="</span>rubrique<span class="balise">"</span><span class="special"> select</span><span class="balise">="</span>local-name(./*[preceding-sibling::NOM])<span class="balise">"/&gt;</span><span class="commentaire">&lt;!-- nom du rubrique --&gt;</span>
+	<span class="balise">&lt;html&gt;</span>
+	<span class="balise">&lt;head&gt;</span>
+		<span class="balise">&lt;meta</span><span class="special"> charset</span><span class="balise">="</span>utf-8<span class="balise">"/&gt;</span>
+		<span class="balise">&lt;link</span><span class="special"> rel</span><span class="balise">="</span>stylesheet<span class="balise">"</span><span class="special"> type</span><span class="balise">="</span>text/css<span class="balise">"</span><span class="special"> href</span><span class="balise">="</span>bao2.css<span class="balise">"/&gt;</span><span class="commentaire">&lt;!--css--&gt;</span>
+		<span class="balise">&lt;title&gt;</span><span class="balise">&lt;xsl:value-of</span><span class="special"> select</span><span class="balise">="</span>$rubrique<span class="balise">"/&gt;</span><span class="balise">&lt;/title&gt;</span><span class="commentaire">&lt;!-- nom du rubrique --&gt;</span>
+	<span class="balise">&lt;/head&gt;</span>
+	<span class="balise">&lt;body&gt;</span>
+		<span class="balise">&lt;div</span><span class="special"> id</span><span class="balise">="</span>contenu<span class="balise">"&gt;</span><span class="commentaire">&lt;!-- conteneur --&gt;</span>
+			<span class="balise">&lt;h1&gt;</span><span class="balise">&lt;xsl:value-of</span><span class="special"> select</span><span class="balise">="</span>$rubrique<span class="balise">"/&gt;</span><span class="balise">&lt;/h1&gt;</span><span class="commentaire">&lt;!-- titre --&gt;</span>
+			<span class="balise">&lt;table&gt;</span>
+				<span class="balise">&lt;xsl:apply-templates</span><span class="special"> select</span><span class="balise">="</span>*/file<span class="balise">"/&gt;</span><span class="commentaire">&lt;!-- contenu du tableau --&gt;</span>
+			... ...
+
+<span class="commentaire">&lt;!-- tous les fichier --&gt;</span>  
+<span class="balise">&lt;xsl:template</span><span class="special"> match</span><span class="balise">="</span>file<span class="balise">"&gt;</span>
+	<span class="balise">&lt;xsl:if</span><span class="special"> test</span><span class="balise">="</span>./items/item<span class="balise">"&gt;</span><span class="commentaire">&lt;!-- vérifier des items --&gt;</span>
+		<span class="balise">&lt;xsl:if</span><span class="special"> test</span><span class="balise">="</span>position() &amp;lt; 10<span class="balise">"&gt;</span>
+			<span class="balise">&lt;xsl:variable</span><span class="special"> name</span><span class="balise">="</span>fullname<span class="balise">"</span><span class="special"> select</span><span class="balise">="</span>./name<span class="balise">"/&gt;</span><span class="commentaire">&lt;!-- nom du fichier --&gt;</span>
+			... ...
+			
+</div>
+<br><br>
+<p> Un exemple de rubrique ECONOMIE étiqueté: </p>
+<a href="../Sorties/BAO2_xml/economie.xml"><div class="tableau">
+<img src="../Images/economie_xml.jpeg" id="arborescence_corpus" alt="Arborescence">
+<br><br>   
+<a href="../Sorties/BAO2_xml/economie.xml" class="lien_centre">[ Visualiser ]</a>
+
+
+<!-- ********************* DOWNLOAD ***************************** -->
+<br><br>
+
+    <div class="telechargement">
+        <a id="download">
+                
+        </a>
+
+            <p>Téléchargement</p>
+
+            <ul>
+		<li><a href="../Scripts/bao2_perl.pl" target="_blank">Perl Expression Régulière</a></li>
+		<li><a href="../Scripts/bao2_xmlrss.pl" target="_blank">Perl 'XML::RSS'</a></li>
+		<li><a href="../Sorties/BAO2/economie.xml" target="_blank">Exemple sortie XML ECONOMIE.xml</a></li>
+                <li><a href="../Sorties/BAO2/societe" target="_blank">Exemple sortie TXT SOCIETE.cnr</a></li>
+                <li><a href="../Sorties/BAO2/BAO2html.xsl" target="_blank">BAO 2 XSL</a></li>
+                <li><a href="../Sorties/BAO2/BAO2html.css" target="_blank">BAO 2 CSS XSL</a></li>
+            </ul>
+    </div>
+
+
+<div class="rightfooter">Crée par Chang TAN et Si WU, Plurital 2015</div>
+</div>
+</body>
+</html>
+

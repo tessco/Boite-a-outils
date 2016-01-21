@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href="../Style/style.css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/ico" href="../Images/bao.ico">
+	<title>Boîte à Outils</title>
+</head>
+
+<body>
+
+<img src="../Images/titlebar3.png" id="navigateur" alt="menu"><!--注释内容-->
+<img src="../Images/titlebar4.png" id="navigateur2" alt="menu2">
+
+<a href="BAO1.html"><div id=button1><img src="../Images/b1.png" id="pic1" alt="1"></div></a>
+<a href="BAO2.html"><div id=button2><img src="../Images/b2.png" id="pic2" alt="2"></div></a>
+<a href="BAO3.html"><div id=button3><img src="../Images/b3.png" id="pic3" alt="3"></div></a>
+<a href="BAO4.html"><div id=button4><img src="../Images/b4.png" id="pic4" alt="4"></div></a>
+<a href="index.html"><div id=button5><img src="../Images/b5.png" id="pic5" alt="5"></div></a>
+
+
+<a href="index.html"><div id=buttonhome--></div></a>
+
+
+<div id="innerpage">
+
+	<a id="top_of_page"><h1>Welcome!</h1></a>
+
+	<p>Nous vous présentons notre projet qui a été réalisé dans le cadre du cours Projet Encadré (Master 1 TAL) pour ce site. Nous avons utilisé 4 "boîtes à outils" dont le but est l'extraction des informations utiles à partir des flux RSS du journal Le Monde de l'années 2014.</p>
+	<p>Dans notre "boîte à outils", il y a Perl, Python, XML, XSLT, Bash, TreeTagger, Cordial, Trameur, Pajek, XHTML, HTML, CSS... Nous remercions Serge Fleury, Jean-Michel Daube et Rachid Belmouhoub pour leur aide pendant ce semestre.</p>
+  	<h2>Mais RSS : qu'est-ce que c'est?</h2>
+  	<p>RSS (Really Simple Syndication) s'agit d'un fichier texte particulier dont le contenu est produit automatiquement (sauf cas exceptionnel) en fonction des mises à jour d'un site Web. Ce contenu est laissé au libre choix du producteur du flux, mais très généralement cela se compose de titres, de mises à jour (par exemple : "nouvelle promotion"), de liens hypertextes correspondants, et de descriptions, en quelques lignes, de ces mises à jour.</P>
+
+     <p>Le terme RSS désigne une convention de structuration de fichiers que nous venons de décrire, garantissant qu'ils puissent être diffusés dans un format compréhensible par le plus grand nombre. Ainsi, un webmaster peut décider, par un outil approprié, d'importer le contenu du "flux RSS" dans sa propre page Web, et plus largement n'importe qui peut, par une manipulation similaire, recevoir dans sa boite e-mail ou via un logiciel dédié les dernières mises à jour d'un site proposant la diffusion de son contenu "en RSS".</p>
+     <p>Le format RSS est un format de données basé sur XML qui est délimité par des balises, d'où la première ligne de l'exemple ci-dessous:</p>
+
+     <div class="keep_format">
+<span class="balise">&lt;?xml</span> <span class="balise">version</span>=<span class="balise">"1.0"</span> <span class="balise">encoding</span>=<span class="balise">"UTF-8"</span><span class="balise">?&gt;</span></span>
+<span class="balise"><span class="balise">&lt;rss</span> <span class="balise">version</span>=<span class="balise">"2.0"</span><span class="balise">&gt;</span></span>
+    <span class="balise"><span class="balise">&lt;channel<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;title<span class="balise">&gt;</span></span></span>Mon site<span class="balise"><span class="balise">&lt;/title<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;description<span class="balise">&gt;</span></span></span>Ceci est un exemple de flux RSS 2.0<span class="balise"><span class="balise">&lt;/description<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;lastBuildDate<span class="balise">&gt;</span></span></span>Sat, 23 May 2015 00:00:01 GMT<span class="balise"><span class="balise">&lt;/lastBuildDate<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;link<span class="balise">&gt;</span></span></span>http://www.example.org<span class="balise"><span class="balise">&lt;/link<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;item<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;title<span class="balise">&gt;</span></span></span>Actualité N°1<span class="balise"><span class="balise">&lt;/title<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;description<span class="balise">&gt;</span></span></span>Ceci est ma première actualité<span class="balise"><span class="balise">&lt;/description<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;pubDate<span class="balise">&gt;</span></span></span>Sat, 23 May 2015 00:00:01 GMT<span class="balise"><span class="balise">&lt;/pubDate<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;link<span class="balise">&gt;</span></span></span>http://www.example.org/actu1<span class="balise"><span class="balise">&lt;/link<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;/item<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;item<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;title<span class="balise">&gt;</span></span></span>Actualité N°2<span class="balise"><span class="balise">&lt;/title<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;description<span class="balise">&gt;</span></span></span>Ceci est ma seconde actualité<span class="balise"><span class="balise">&lt;/description<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;pubDate<span class="balise">&gt;</span></span></span>Sat, 07 Sep 2002 00:00:01 GMT<span class="balise"><span class="balise">&lt;/pubDate<span class="balise">&gt;</span></span></span>
+            <span class="balise"><span class="balise">&lt;link<span class="balise">&gt;</span></span></span>http://www.example.org/actu2<span class="balise"><span class="balise">&lt;/link<span class="balise">&gt;</span></span></span>
+        <span class="balise"><span class="balise">&lt;/item<span class="balise">&gt;</span></span></span>
+    <span class="balise"><span class="balise">&lt;/channel<span class="balise">&gt;</span></span></span>
+<span class="balise"><span class="balise">&lt;/rss<span class="balise">&gt;</span></span></span>
+</pre></div>
+<br><br>
+	<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+
+	<h2>Notre corpus</h2>
+	<p>Comme nous avons dit, notre corpus sont les flux RSS du journal Le Monde 2014. Nous avons téléchargé sur le site du cours, il est de 2.2 Go. Les fichiers sont disposés en une arborescence de dossiers classés en jours et en mois. Ils sont classés en rubriques, chacune contenant les titres et les descriptions des articles. Le premier pas de nos tâches est l'accès des fichiers par Perl, on peut visualier l'organisation arborescence de ces fichiers comme ci-dessous: </p>
+	<br>
+	<img src="../Images/arborescence_corpus.jpeg" id="arborescence_corpus" alt="Arborescence">
+
+	<h2>Les quatre étapes:</h2>
+
+	<p>- BAO 1: L'extraction des informations (titre et description) dans les dossier et leurs répartitions en rubriques.</p>
+	<p>- BAO 2: L'étiquetage des informations d'extraction de BAO 1 par TreeTagger et Cordial.</p>
+	<p>- BAO 3: L'extraction de motifs à partir des sorties de la BAO 2.</p>
+	<p>- BAO 4: La représentation de ces motifs en graphe au près le filtrage.</p>
+	
+	<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="rightfooter">Crée par Chang TAN et Si WU, Plurital 2015</div>
+</div>
+</body>
+</html>

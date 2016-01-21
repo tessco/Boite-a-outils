@@ -1,0 +1,69 @@
+html{
+
+	font-family:fantasy;
+}
+
+#contenu{
+
+	background-color:#e0ffff;
+	border:1px;
+	width:90%;
+	margin-left:5%;
+}
+
+h1{
+	text-align:center;
+}
+
+table{
+	width:92%;
+	border:1px solid black;
+	border-collapse:collapse;
+	table-layout:fixed;
+	display:block;
+	margin:auto;
+	background-color:white;
+	margin-bottom:0%;
+	text-align:left;
+}
+
+
+th{
+	background:#sfe;
+	border:1px solid black;
+	color:black;
+	text-align:center;
+}
+.fileheader{
+	background:#ffb6c1;
+	color:indianred;
+	font-weight:normal;
+	text-align:center;
+	
+}
+
+td{
+
+	border:1px solid black;
+	padding:11px;
+	color:black;
+}
+
+.forme{
+	color:#008080;
+	font-weight:bold;
+
+}
+
+.lemma{
+	color:#2e8B57;
+}
+
+.type{
+
+	color:#191970;
+}
+.small{
+	font-size:70%;
+	font-style:italic;
+}

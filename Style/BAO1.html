@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="../Style/style.css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/ico" href="../Images/bao.ico">
+	<title>BAO 1</title>
+</head>
+
+<body>
+
+<img src="../Images/titlebar3.png" id="navigateur" alt="menu">
+<img src="../Images/titlebar4.png" id="navigateur2" alt="menu2">
+<a href="BAO1.html"><div id=button1><img src="../Images/b1.png" id="pic1" alt="1"></div></a>
+<a href="BAO2.html"><div id=button2><img src="../Images/b2.png" id="pic2" alt="2"></div></a>
+<a href="BAO3.html"><div id=button3><img src="../Images/b3.png" id="pic3" alt="3"></div></a>
+<a href="BAO4.html"><div id=button4><img src="../Images/b4.png" id="pic4" alt="4"></div></a>
+<a href="index.html"><div id=button5><img src="../Images/b5.png" id="pic5" alt="5"></div></a>
+
+<a href="index.html"><div id=buttonhome></div></a>
+
+
+<div id="innerpage">
+
+<a id="top_of_page"><h1>Boîte à Outils 1</h1></a>
+<br><br>
+<h2>Une représentation des sorties XML de BAO 1:</h2>
+
+<img src="../Images/culture_xml.jpeg" id="arborescence_corpus" alt="Arborescence">
+<br><br>
+<p>Pour obtenir le résultat ci-dessus, il existe deux programmations Perl ayant extrait des informations BAO 1 puis on les transforme par XSLT des sorties XML en format HTML.</p>
+<h2>Un peu de présentation pour BAO 1</h2>
+<p>En étape BAO 1, le but est d'extraire les titres et les descriptions contenus dans chaque fichier XML de l’arborescence. On aura deux types de sorties : un fichier TXT et un fichier XML. Sachant que les fils RSS appartiennent à différentes rubriques du journal, un fichier de chaque type est produit pour chaque rubrique. Les expressions régulières et le module XML:: RSS vont nous aider à les extraire.</p>
+<h2>1er phase: Le parcours d'arborescence</h2>
+<p>Pour traiter chacun de ces fichiers dans dossier “2014”, le programme doit identifier quels objets de l'arborescence sont des dossiers et lesquels sont des fichiers. Le parcours d'arborescence se fait avec 'if (-d $file)' , pour identifier les dossiers, 'id (-f $file)' pour les fichiers.</p>
+                                 		<!-- PARCOURIR -->
+                                 		
+<div class="keep_format"><span class="blue">my</span> <span class="orange">$path</span> = <span class="blue">shift</span>(<span class="purple">@_</span>);
+    <span class="blue">opendir</span>(DIR, <span class="orange">$path</span>) <span class="blue">or</span> <span class="blue">die</span> <span class="grey">"Erreur d'ouvrir $!\n"</span>;
+    <span class="blue">my</span> <span class="purple">@files</span> = <span class="blue">readdir</span>(DIR);
+    <span class="blue">closedir</span>(DIR);        
+    <span class="blue">foreach</span> <span class="blue">my</span> <span class="orange">$file</span> (<span class="purple">@files</span>) {        
+                <span class="blue">next</span> <span class="blue">if</span> <span class="orange">$file</span> =~ <span class="grey">/^\.\.?$/</span>;
+                <span class="orange">$file</span> = <span class="orange">$path</span>.<span class="grey">"/"</span>.<span class="orange">$file</span>;         
+                <span class="blue">if</span> (<span class="blue">-d</span> <span class="orange">$file</span>) {
+                        &amp;parcoursarborescencefichiers(<span class="orange">$file</span>);
+                }                
+                <span class="blue">if</span> (<span class="blue">-f</span> <span class="orange">$file</span>)
+                {
+                        <span class="blue">if</span> (<span class="orange">$file</span>=~<span class="grey">/\.xml$/</span>) <span class="blue">&amp;&amp;</span>(<span class="orange">$file</span>=~<span class="grey">!~/\/fil.+\.xml$/</span>)<span class="green">## On commence ensuite le traitement si le fichier trouvé se termine par ".xml", et s'il ne commence pas par "fil", 
+	    autres fichiers faisant partie de l'arborescence, qui ne nous intéressent pas</span>
+</div>
+
+                                     <!--TRAITEMENT -->
+
+<br><br>
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+<h2>Les encodages</h2>
+	<li>On peut extraire directement l'encodage du fichier. Car la première ligne du fichier RSS contient une déclaration d'encodage, exemple suivant :
+		<br><br>
+		<div class="keep_format"><span class="blue">&lt;?xml</span><span class="orange"> version</span><span class="blue">="</span>1.0<span class="blue">"</span><span class="orange"> encoding</span><span class="blue">="</span>utf-8<span class="blue">"?&gt;</span></div>
+	    <br><br>
+	    On s'assure une lecture et une sortie dans le bon encodage:
+		<br><br>
+		<div class="keep_format"><span class="blue">open</span>(FILE,<span class="grey">"&lt;:encoding($encodage)"</span>, <span class="orange">$file</span>);</div>
+		<br><br>
+		<div class="keep_format"><span class="blue">if</span> (<span class="blue">uc</span>(<span class="orange">$encodage</span>) <span class="blue">ne</span> <span class="grey">"utf-8"</span>) {  
+	utf8(<span class="orange">$titre</span>);
+	utf8(<span class="orange">$descrip</span>);
+}	
+</div>
+
+	
+		<br><br>
+		 L'expression régulière permet de le récupérer : 
+		<br><br>
+		 <div class="keep_format"><span class="blue">open</span>(FILE,<span class="orange">$file</span>); 	 
+<span class="orange">$texte</span>=~<span class="grey">/encoding= ?= ?[\'\"]([^\'\"]+)[\'\"]/i;</span>
+<span class="blue">my</span><span class="orange">$encodage</span>=<span class="orange">$1</span>;
+<span class="blue">print:</span> <span class="blue">"ENCODAGE:</span> <span class="orange">$encodage\n";</span>
+...
+</div>
+		<br>				
+		
+	</li>
+</ol>
+<p>Identification:</p>
+<div class="keep_format"><span class="blue">if</span> ( <span class="orange">$encodage</span> <span class="blue">ne</span> <span class="grey">""</span> ) { <span class="green">#si l'encodage n'est pas vide, faire le traitement</span>
+}
+</div>
+<br><br>
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+
+									<!-- EXTRACt-->
+
+<h2>Extraction des Informations</h2>
+<h3>Expressions Régulières</h3>
+<div class="keep_format"><span class="blue">while</span> (<span class="orange">$texte</span>=~<span class="grey">/&lt;item&gt;&lt;title&gt;(.+?)&lt;\/title&gt;.+?&lt;description&gt;(.+?)&lt;\/description&gt;/g</span>) { 
+        <span class="blue">my</span> <span class="orange">$titre</span>=<span class="orange">$1</span>; <span class="green">#récupérer le titre et le contenu de description</span>
+        <span class="blue">my</span> <span class="orange">$descrip</span>=<span class="orange">$2</span>; 
+       
+        ... ...
+  
+<span class="orange">$texte</span>=~<span class="grey">/(&lt;channel&gt;|&lt;atom.+&gt;)&lt;title&gt;([^&lt;]+)&lt;\/title&gt;/</span>; <span class="green">#récupérer les rubriques:sport, cinéma...</span>
+<span class="blue">my</span><span class="orange">$rub</span>=<span class="orange">$1</span>; <span class="green">#nettoyer les rubriques</span>
+<span class="blue">print</span> <span class="grey">"Rubrique : $rub\n"</span>;
+</div>
+
+<p>L'expressions régulières peuvent parcourir la structure arborescente des fichiers et arriver dans certains textes et de les extraire. Cette expression ci-dessus cherche les parties du texte qui contiennent les balises &lt;title&gt;&lt;/title&gt; et &lt;description&gt;&lt;/description&gt; directement sous la balise &lt;item&gt;, et les parenthèses isolent le contenu dans chacune de ces balises, le stockant respectivement dans les variables $1 et $2.</p>
+
+
+<h3>Le Module XML::RSS</h3>
+
+<P>Cette deuxième solution utilise XML::RSS, un module désigné spécifiquement pour les fichiers RSS.XML::RSS est un module spécialement pour RSS. Il faut parcourir l'arborescence du dossier, en traitant tous les fichiers XML. Les sorties sont pareilles que celles de l’expression régulière. Ce qui change est la manière d'extraire ces informations. XML::RSS permet d'exploiter la structure arborescente pour atteindre les nœuds et de produire un objet hiérarchique au lieu de l'objet plat produit par la méthode qui utilise l’expression régulière.</p>
+
+<p>Ce qui change est la manière d'extraire ces informations. Faire du fichier un objet XML::RSS permet d'exploiter la structure arborescente pour atteindre les nœuds et de produire un objet hiérarchique au lieu de l'objet plat produit par la méthode qui utilise les regex.</p>
+
+<div class="keep_format"><span class="blue">my</span> <span class="orange">$rss</span> = new XML::RSS;
+<span class="orange">$rss</span>-&gt;parsefile(<span class="orange">$file</span>);
+... ...
+
+<span class="blue">foreach</span> <span class="blue">my</span> <span class="orange">$item</span> (<span class="purple">@</span>{<span class="orange">$rss</span>-&gt;{<span class="sc7">'items'</span>}})<span class="sc0"> 
+</span>{
+	<span class="blue">my</span> <span class="orange">$titre</span>=<span class="orange">$item</span>-&gt;{<span class="sc7">'title'</span>};
+	<span class="blue">my</span> <span class="orange">$description</span>=<span class="orange">$item</span>-&gt;{<span class="sc7">'description'</span>}; 
+        …
+}
+</div>
+
+<p>La première ligne crée un nouvel objet XML::RSS dont la référence est stockée dans la variable $rss et la deuxième signifie que l'objet à analyser en forme RSS. Le fichier est situé au chemin indiqué par $path.</p>
+
+<p>L'avantage avec cette méthode est qu'il n'est pas nécessaire de faire la normalisation, c'est à dire la suppression des sauts de lignes, le traitement des encodages différents. C'est le module XML::RSS qui va gérer, et rend aussi la tâche de parcourir l'arborescence RSS plus facile. Cette méthode prend un peu plus de temps que les regex pour l'extraction.</p>
+
+
+<br>
+
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+				<!--TRAITEMENT -->
+
+<br><br>
+<h2>Nettoyage du texte</h2>
+
+
+<p>Une fois les informations extraites, il faut veiller à leur bon affichage et à la non-duplication de ces informations.</p>
+
+<h3>Nettoyage du texte</h3>
+<P>Une étape importante est le nettoyage des rubriques, des titres et des descriptions, parce qu'ils contiennent certaines suites de caractères étranges et des entités XML. Le premier traitement se fait avec le module Unicode::String qw(utf8) permettant d'encoder des chaînes en utf-8. Un second module, HTML::Entities, est utilisé pour convertir les caractères en entités HTML pour éviter des problèmes de codage lors de la création des nouveaux fichiers.
+La fonction nettoyage qui permet de supprimer les balises non pertinentes intégrées aux titres et descriptions, ainsi qu'à filtrer certains caractères.</P>
+<div class="keep_format">
+        <span class="orange">$rub</span>=~s/Le ?Monde.fr ?://g;
+		<span class="orange">$rub</span>=~s/ ?: ?Toute l'actualité sur Le Monde.fr.//g;
+		<span class="orange">$rub</span>=~s/\x{E9}/e/g;  <span class="red"># é</span>
+		<span class="orange">$rub</span>=~s/\x{E8}/e/g;  <span class="red"># è</span>
+		<span class="orange">$rub</span>=~s/\x{E0}/a/g;  <span class="red"># à</span>
+		<span class="orange">$rub</span>=~s/\x{7E}/e/g;  <span class="red"># </span>
+		<span class="orange">$rub</span>=~s/\x{2E}/e/g;  <span class="red"># .</span>
+		<span class="orange">$rub</span>=~s/\x{C9}/e/g;  <span class="red"># É</span>
+		<span class="orange">$rub</span>=~s/\x{3A}/e/g;  <span class="red"># :</span>
+		<span class="orange">$rub</span>=~s/ //g;
+		<span class="orange">$rub</span>=<span class="orange">uc</span>(<span class="orange">$rub</span>); <span class="red"># mise en majuscules</span>
+		<span class="orange">$rub</span>=~s/-LEMONDE.FR//g;
+		<span class="orange">$rub</span>=~s/:TOUTEL'ACTUALITESURLEMONDE.FR.//g;
+</div>
+
+<br><br>
+<div class="keep_format"><span class="blue">sub</span> nettoyage {
+        <span class="blue">my</span> <span class="orange">$texte</span>=<span class="orange">shift</span>;
+        
+        <span class="orange">$texte</span>=~<span class="red">~s/<img[^>]+>//g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/<a href[^>]+>//g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{0152}/Œ/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{20ac}/€/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{20ac}/€/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{2018}/‘/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{201c}/“/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{201d}/”/g;</span>;
+        <span class="orange">$texte</span>=~<span class="red">~s/\x{2013}/-/g;</span>;
+                                                    ........
+}
+
+</div>
+<br><br>
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+
+				<!--SORTIES -->
+
+<h2>Les Sorties en TXT et XML</h2>
+<p>Les sorties en format TXT ne contiennent aucune balise, c'est simplement une liste des titres et des descriptions. Les sorties en format XML doivent être bien structurées avec des balises XML qui peuvent organiser les informations appropriées. La structuration des données sont mises en forme par des balises : “name”, “date” (pour identifier) “item” contient son titre et sa description (pour délimiter)…</p>
+
+<div class="keep_format"><span class="blue">foreach</span> <span class="blue">my</span> <span class="orange">$rub</span>=(<span class="orange">@listeRubriques</span>){ <span class="green"># pour chaque element dans la liste rubrique</span>
+	<span class="blue">my</span> <span class="orange">$output1</span>=(<span class="orange">$sorite.$rub. ".xml";</span>)<span class="green">#sortie des fichiers xml</span>
+	<span class="blue">my</span> <span class="orange">$output2</span>=(<span class="orange">$sorite.$rub. ".txt";</span>)<span class="green">#sortie des fichiers txt</span>
+        <span class="blue">if</span> (!<span class="blue">open</span> (out_XML,<span class="grey">"&gt;:encoding(utf-8)"</span>,<span class="orange">$output1</span>)) 
+        { 
+                <span class="blue">die</span> <span class="grey">"Erreur d'ouvrir file $output1"</span>;
+        }
+         <span class="blue">if</span> (!<span class="blue">open</span> (out_TXT,<span class="grey">"&gt;:encoding(utf-8)"</span>,<span class="orange">$output2</span>)) 
+        { 
+                <span class="blue">die</span> <span class="grey">"Erreur d'ouvrir file $output2"</span>;
+        }
+        <span class="green">#ouverture des balises XML du début du fichier</span>
+        <span class="blue">print</span> "out_XML <span class="grey">"&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n"</span>;
+        <span class="blue">print</span> "&lt;EXTRACTION &gt;\n";
+        <span class="blue">close</span>(out_XML);
+        <span class="blue">close</span>(out_TXT);
+}
+
+</div>
+
+<p>La fin du traitement du fichier : </p>
+<div class="keep_format">
+<span class="blue">print</span> file_out <span class="grey">"&lt;/items&gt;"</span>;
+<span class="blue">print</span> file_out <span class="grey">"&lt;/file&gt;"</span>;
+<span class="blue">close</span>(file_out);
+</div>
+
+<p>Chaque paire titre-description est écrite sous une balise &lt;item&gt; et chacune entourée de une balise adaptée si: if (!(exists $dicoTitres{$titre}) and (!(exists $dicoDescrip{$descrip}))) [vérifier les doublons], puis</p>
+<p>Mettre les balise: $texteXML.="&lt;item&gt;\n&lt;title&gt;$titre&lt;/title&gt;\n&lt;description&gt;$descrip&lt;/description&gt;\n&lt;/item&gt;\n";&nbsp;&nbsp;</p>
+<p>Fermer les sorties avec des balises: $texteXML.="&lt;/items&gt;\n&lt;/file&gt;\n";</p>
+<p>La clôture:</p>
+<div class="keep_format">
+<span class="blue">print</span> out_XML <span class="orange">"$texteXML"</span>;
+<span class="blue">print</span> out_TXT <span class="orange">"$texteBRUT"</span>;
+<span class="blue">close</span>(out_XML);
+<span class="blue">close</span>(out_TXT);
+</div>
+
+<br><br>					
+<div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+
+<h2>Remarques</h2>
+
+<P>Les fichiers en année 2014, la rubrique “Sciences” a la structure un peu particulière que les autres, du coupe, il faut faire attention à notre programme si notre méthode peut le récupérer ou pas. A noter que la méthode par XML::RSS prend plus de temps que celle par expressions régulières.</p>
+<br>
+<h3>XML Copy Editor</h3>
+<p>Pour séparer le contenu par la rubrique, on a aussi essayer de conduire des sorties d'un script (script Perl issu du 2e cours, qui fait sortir tous les contenu sans classement) dans XML Copy Editor, puis on a utilisé Xpath pour extraire le contenu selon rubrique, et on les a stocké séparemment dans les dizaine de fichiers xml au nom de leur rubrique. Sur la base de fichiers xml, on a employé les expressions régulières pour supprimer les balises pour, finalement, stocker des fichiers sous forme txt;</p>
+
+
+<!-PRESENTATION HTML-->
+
+<h2>XSL</h2>
+<p>On a transformé les résultats de BAO 1 en format HTML après une application de XSLT des sorties XML. Voilà une partie de codes et un exemple de rubrique PLANETE rangé par titre et description:</p>
+
+<div class="keep_format"><span class="balise">&lt;?xml</span><span class="special"> version</span><span class="balise">="</span>1.0<span class="balise">"</span><span class="special"> encoding</span><span class="balise">="</span>utf-8<span class="balise">"?&gt;</span>
+<span class="balise">&lt;xsl:stylesheet</span><span class="special"> xmlns:xsl</span><span class="balise">="</span>http://www.w3.org/1999/XSL/Transform<span class="balise">"</span><span class="special"> version</span><span class="balise">="</span>1.0<span class="balise">"&gt;</span>
+<span class="balise">&lt;xsl:output</span><span class="special"> method</span><span class="balise">="</span>html<span class="balise">"</span><span class="special"> version</span><span class="balise">="</span>4.0<span class="balise">"</span><span class="special"> encoding</span><span class="balise">="</span>utf-8<span class="balise">"</span><span class="special"> indent</span><span class="balise">="</span>yes<span class="balise">"/&gt;</span>
+  <span class="balise">&lt;xsl:template</span><span class="special"> match</span><span class="balise">="</span>/EXTRACTION<span class="balise">"&gt;</span>
+<span class="balise">&lt;xsl:variable</span><span class="special"> name</span><span class="balise">="</span>rubrique<span class="balise">"</span><span class="special"> select</span><span class="balise">="</span>local-name(./*[preceding-sibling::NOM])<span class="balise">"/&gt;</span> <span class="red">&lt;!-- nom du rubrique --&gt;</span>
+		<span class="orange">... ...</span>		
+  
+  <span class="balise">&lt;xsl:template</span><span class="special"> match</span><span class="balise">="</span>file<span class="balise">"&gt;</span> <span class="red">&lt;!-- tous les fichiers --&gt;</span>
+    <span class="balise">&lt;xsl:if</span><span class="special"> test</span><span class="balise">="</span>./items/item<span class="balise">"&gt;</span>
+    
+      <span class="balise">&lt;xsl:variable</span><span class="special"> name</span><span class="balise">="</span>fullname<span class="balise">"</span><span class="special"> select</span><span class="balise">="</span>./name<span class="balise">"/&gt;</span><span class="red">&lt;!-- nom du fichier --&gt;</span>
+      <span class="balise">&lt;xsl:variable</span><span class="special"> name</span><span class="balise">="</span>name<span class="balise">"</span><span class="special"> select</span><span class="balise">="</span>substring-before($fullname, '.')<span class="balise">"/&gt;</span> <span class="red">&lt;!--nom du ficher --&gt;</span>
+     		 <span class="orange">... ...</span>	
+</div>
+
+
+
+<a href="../Sorties/BAO1_xml/PLANETE.xml"><div class="tableau">
+<br><br>
+<img src="../Images/planete_xml.jpeg" id="arborescence_corpus" alt="Arborescence">
+</div></a>
+<br><br>
+<a href="../Sorties/BAO1_xml/PLANETE.xml" class="lien_centre">[ Visualiser ]</a>
+
+                  <!-- DOWNLOAD -->
+
+<br><br>
+    <div class="telechargement">
+        <a id="download">
+            
+        </a>
+        <div class="lien_centre"><a href="#top_of_page">[ TOP ]</a></div>
+
+            <p>Téléchargement:</p>
+			<ul>
+	            <li><a href="../Scripts/bao1_perl.pl" target="_bla">Perl Expression Régulière</a></li>
+	            <li><a href="../Scripts/bao1_xmlrss.pl" target="_blank">Perl 'XML::RSS'</a></li>
+		    <li><a href="../Sorties/BAO1/SPORT.xml" target="_blank">Exemple sortie XML SPORT.xml</a></li>
+		    <li><a href="../Sorties/BAO1/SOCIETE.txt" target="_blank">Exemple sortie TXT SOCIETE.txt</a></li>
+                <li><a href="../Sorties/BAO1_xml/BAO1html.xsl" target="_blank">BAO 1 XSL</a></li>
+                <li><a href="../Sorties/BAO1_xml/bao1_html.css" target="_blank">BAO 1 CSS</a></li>
+           </ul> 
+    </div>
+<div class="rightfooter">Crée par Chang TAN et Si WU, Plurital 2015</div>
+</div>
+
+</body>
+</html>
+
